@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { fade } from '../animation';
+import { fade, slide } from '../animation';
 
 
 @Component({
@@ -7,7 +7,7 @@ import { fade } from '../animation';
   templateUrl: './todos.component.html',
   styleUrls: ['./todos.component.scss'],
   animations: [
-    fade
+    slide
   ]
 })
 export class TodosComponent implements OnInit {
