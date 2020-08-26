@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { fade, slide, bounceOutLeftAnimation, fadeInAnimation } from '../animation';
-import { trigger, transition, state, style, animate, keyframes, useAnimation, query, animateChild } from '@angular/animations';
+import { trigger, transition, state, style, animate, keyframes, useAnimation, query, animateChild, group, stagger } from '@angular/animations';
 
 @Component({
   selector: 'app-todos',
@@ -9,12 +9,16 @@ import { trigger, transition, state, style, animate, keyframes, useAnimation, qu
   animations: [
     trigger('todosAnimation', [
       transition(':enter', [
-        query('h1', [
-          style({ transform: 'translateY(-20px)' }),
-          animate(1000)
-        ]),
-        query('@todoAnimation', animateChild()
-        )
+        // use group to query element appear same time
+        group([
+          query('h1', [
+            style({ transform: 'translateY(-20px)' }),
+            animate(1000)
+          ]),
+          // stagger tạo delay giữa các item khi animation được thực thi
+          query('@todoAnimation', stagger(200, animateChild())
+          )
+        ])
       ])
     ]),
     trigger('todoAnimation', [
