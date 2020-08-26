@@ -13,13 +13,22 @@ export let bounceOutLeftAnimation = animation(
   ]))
 );
 
+export let fadeInAnimation = animation([
+  style({ opacity: 0 }),
+  animate('{{ duration }} {{ easing }}')
+], {
+  params: {
+    duration: '2s',
+    easing: 'ease-out'
+  }
+});
+
 export let fade = trigger('fade', [
-  state('void', style({ backgroundColor: 'yellow', opacity: 0 })),
-  transition('void => *', [
-    // style({ backgroundColor: 'yellow', opacity: 0 }),
-    animate(2000, style({ backgroundColor: 'white', opacity: 1 }))
-  ]),
-  transition('* => void', [
+  // state('void', style({ backgroundColor: 'yellow', opacity: 0 })),
+  transition(':enter',
+    useAnimation(fadeInAnimation)
+  ),
+  transition(':leave', [
     animate(2000, style({ opacity: 0 }))
   ])
 ]);
