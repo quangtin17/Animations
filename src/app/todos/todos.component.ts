@@ -1,12 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { fade, slide, bounceOutLeftAnimation, fadeInAnimation } from '../animation';
-import { trigger, transition, state, style, animate, keyframes, useAnimation } from '@angular/animations';
+import { trigger, transition, state, style, animate, keyframes, useAnimation, query, animateChild } from '@angular/animations';
 
 @Component({
   selector: 'app-todos',
   templateUrl: './todos.component.html',
   styleUrls: ['./todos.component.scss'],
   animations: [
+    trigger('todosAnimation', [
+      transition(':enter', [
+        query('h1', [
+          style({ transform: 'translateY(-20px)' }),
+          animate(1000)
+        ]),
+        query('@todoAnimation', animateChild()
+        )
+      ])
+    ]),
     trigger('todoAnimation', [
       transition(':enter', [
         useAnimation(fadeInAnimation, {
@@ -41,6 +51,14 @@ export class TodosComponent implements OnInit {
   removeItem(item) {
     let index = this.items.indexOf(item);
     this.items.splice(index, 1);
+  }
+
+  animationStarted($event) {
+    console.log($event);
+  }
+
+  animationDone($event) {
+    console.log($event);
   }
 
 }
